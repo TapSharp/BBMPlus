@@ -1,0 +1,3 @@
+[submodule "src/FollowPlea"]
+	path = src/FollowPlea
+	url = git@github.com:TapSharp/FollowPlea.git
