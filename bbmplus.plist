@@ -1,0 +1,8 @@
+{
+	Filter = {
+		Bundles = (
+			"com.blackberry.bbm1",
+			"com.apple.springboard"
+		);
+	};
+}
