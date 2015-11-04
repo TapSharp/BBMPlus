@@ -1,8 +1,7 @@
 TWEAK_NAME = bbmplus
 
 bbmplus_FILES  = $(wildcard src/*.xm)
-bbmplus_FILES += src/FollowPlea/FollowPlea.xm
-bbmplus_FRAMEWORKS = Foundation UIKit Social Accounts
+bbmplus_FRAMEWORKS = Foundation UIKit
 bbmplus_LIBRARIES = cephei
 
 export ARCHS = armv7 arm64
