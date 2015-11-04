@@ -1,5 +1,5 @@
-#import <Preferences/PSListController.h>
+#import <CepheiPrefs/HBRootListController.h>
 
-@interface PrefsRootListController : PSListController
-
+@interface PrefsRootListController : HBRootListController
++ (UIColor*)hb_tintColor;
 @end
