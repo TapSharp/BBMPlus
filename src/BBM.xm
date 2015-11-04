@@ -7,12 +7,20 @@
 
 %ctor {
 	@autoreleasepool {
-		HBPreferences* preferences = [HBPreferences preferencesForIdentifier:BBMPLUS_BUNDLE_ID];
 
-		// Register defaults
-		[preferences registerBool:&bbmplusEnabled default:YES forKey:@"Enabled"];
+		preferences = [HBPreferences preferencesForIdentifier:BBMPLUS_BUNDLE_ID];
 
-		if (bbmplusEnabled) {
+		[preferences registerDefaults:@{
+			@"Enabled": @YES,
+			@"Hide_Read_Typing_Status": @NO,
+			@"Unlimited_Pings": @NO,
+			@"Hide_Screenshot_Reporting": @NO,
+			@"Disable_Retraction": @NO,
+			@"Timed_Message_Forever": @NO,
+			@"Dark_Mode": @NO
+		}];
+
+		if ([preferences boolForKey:@"Enabled"] && IS_IN_BUNDLE(@"com.blackberry.bbm1")) {
 			%init;
 			HBLogDebug(@"Initialized: %@", BBMPLUS_BUNDLE_ID);
 		}
