@@ -4,7 +4,7 @@
 + (UIImage *)imageNamed:(NSString *)named inBundle:(NSBundle *)bundle;
 @end
 
-@interface TapSharpHeaderCell : PSTableCell {
+@interface BBMTapSharpHeaderCell : PSTableCell {
     UILabel *tweakNameLabel;
     UILabel *tweakDescriptionLabel;
 }
@@ -13,7 +13,7 @@
 - (NSString *) tweakDescription;
 @end
 
-@interface TapSharpFooterCell : PSTableCell {
+@interface BBMTapSharpFooterCell : PSTableCell {
 	UILabel* copyrightLabel;
 	UIImageView* logoImageView;
 }

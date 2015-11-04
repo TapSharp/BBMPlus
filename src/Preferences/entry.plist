@@ -5,6 +5,6 @@
 		icon = icon.png;
 		cell = PSLinkCell;
 		isController = 1;
-		detail = PrefsRootListController;
+		detail = "BBMRootListController";
     };
 }

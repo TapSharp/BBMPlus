@@ -1,8 +1,9 @@
-#import "TapSharpCustomCells.h"
+#import "BBMTapSharpCustomCells.h"
+
 
 #pragma mark Header Cell
 
-@implementation TapSharpHeaderCell
+@implementation BBMTapSharpHeaderCell
 
 - (NSString *) tweakName {
 	return @"BBM+";
@@ -63,7 +64,7 @@
 
 #pragma mark - Footer Cell
 
-@implementation TapSharpFooterCell
+@implementation BBMTapSharpFooterCell
 
 - (NSString *) copyrightText {
 	return @"ALL RIGHTS RESERVED © %@";

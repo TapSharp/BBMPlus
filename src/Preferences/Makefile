@@ -4,7 +4,7 @@ bbmplus_FILES = $(wildcard *.m)
 bbmplus_INSTALL_PATH = /Library/PreferenceBundles
 bbmplus_FRAMEWORKS = UIKit
 bbmplus_PRIVATE_FRAMEWORKS = Preferences
-bbmplus_LIBRARIES = cepheiprefs
+bbmplus_LIBRARIES = cephei cepheiprefs
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/bundle.mk

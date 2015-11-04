@@ -1,13 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<!-- Sharing text. -->
-	<key>SHARE_TEXT</key>
-	<string>I’m using BBM+ Pro to completely change the way I use BBM on my %@! Try it.</string>
-
-	<!-- Switch to enable/disable the tweak. -->
-	<key>ENABLED</key>
-	<string>Enabled</string>
-</dict>
-</plist>
+{
+	ABOUT = "About";
+	SHARE_TEXT = "I’m using BBM+ by @TapSharp to change the way I use BBM on my #iPhone #iOS. Available at %@";
+	ENABLED = "Enabled";
+	INDIVIDUAL_SETTINGS = "Individual Settings";
+	INDIVIDUAL_SETTINGS_TEXT = "You can turn specific features of BBM+ on and off here.";
+	HIDE_READ_AND_TYPING_STATUS = "Hide Read & Typing Status";
+	ON = "On";
+	OFF = "Off";
+	GENERAL_FOOTER_TEXT = "This is a quick switch to quickly toggle on/off all the features below.";
+	UNLIMITED_PINGS = "Unlimited Pings";
+	DISABLE_ADS = "Disable Adverts";
+	HIDE_SCREENSHOT_REPORT = "Hide Screenshot Reporting";
+	DISABLE_RETRACTION = "Disable Message Retraction";
+	TIMED_MESSAGE_FOREVER = "Timed Message Forever";
+	DARK_MODE = "Dark Mode (Coming Soon)";
+}

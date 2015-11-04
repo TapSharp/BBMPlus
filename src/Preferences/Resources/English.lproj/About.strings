@@ -1,0 +1,7 @@
+{
+	ABOUT = "About";
+	DEVELOPER = "Developer";
+	TRANSLATION = "Translation";
+	EMAIL_SUPPORT = "Support Email";
+	EMAIL_SUPPORT_TEXT = "You can send us an email to report bugs or if you have suggestions. We will reply quicker on Twitter though.";
+}
