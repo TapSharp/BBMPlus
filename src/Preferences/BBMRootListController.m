@@ -2,10 +2,12 @@
 
 @implementation BBMRootListController
 
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #pragma mark - Constants
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 + (NSString *)hb_shareText {
-	NSString *formatString = NSLocalizedStringFromTableInBundle(@"SHARE_TEXT", @"Root", [NSBundle bundleForClass:self.class], nil);
+	NSString* formatString = BPLocalizedString(@"SHARE_TEXT");
 	return [NSString stringWithFormat:formatString, [BBMRootListController hb_shareURL]];
 }
 
@@ -14,19 +16,27 @@
 }
 
 + (UIColor *)hb_tintColor {
-	return [UIColor colorWithWhite:74.f / 255.f alpha:1];
+	return BPTintColor;
 }
 
 + (NSString *)hb_specifierPlist {
 	return @"Root";
 }
 
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#pragma mark - Preference Value
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 + (void)postPreferenceChangedNotification {
-	CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), (CFStringRef)BBMPLUS_PREFS_NOTIFICATION, NULL, NULL, YES);
+	CFNotificationCenterPostNotification(
+		CFNotificationCenterGetDarwinNotifyCenter(),
+		(CFStringRef) BPPrefsChangedNotification, NULL, NULL, YES
+	);
 }
 
 - (id)readPreferenceValue:(PSSpecifier *)specifier {
-	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:BBMPLUS_PREFS_FILE];
+	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:BPPrefsFilePath];
 
 	if ( ! prefs[[specifier propertyForKey:@"key"]]) {
 		return [specifier propertyForKey:@"default"];
@@ -37,14 +47,16 @@
 
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier {
 	NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
-	[defaults addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:BBMPLUS_PREFS_FILE]];
+	[defaults addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:BPPrefsFilePath]];
 	[defaults setObject:value forKey:[specifier properties][@"key"]];
-	[defaults writeToFile:BBMPLUS_PREFS_FILE atomically:YES];
+	[defaults writeToFile:BPPrefsFilePath atomically:YES];
     [BBMRootListController postPreferenceChangedNotification];
 }
 
 
-#pragma mark - Prefs Header and Footer
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#pragma mark - View events
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];

@@ -1,21 +1,17 @@
 #import <Foundation/Foundation.h>
-#import <Cephei/HBPreferences.h>
+#import <CaptainHook/CaptainHook.h>
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #pragma mark - Definitions
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-#define logMessage(log) HBLogDebug(log)
-#define BBMPLUS_BUNDLE_ID @"com.tapsharp.bbmplus"
-#define BBMPLUS_PREFS_NOTIFICATION [NSString stringWithFormat:@"%@/ReloadPrefs", BBMPLUS_BUNDLE_ID]
-#define BBMPLUS_PREFS_FILE [NSString stringWithFormat:@"/User/Library/Preferences/%@.plist", BBMPLUS_BUNDLE_ID]
-#define IS_IN_BUNDLE(bundle) ([[NSBundle mainBundle].bundleIdentifier isEqualToString:bundle])
-
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#pragma mark - Constants
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+#define BPBundleID @"com.tapsharp.bbmplus"
+#define BPBundlePath @"/Library/PreferenceBundles/bbmplus.bundle"
+#define BPBundle [NSBundle bundleWithPath:BPBundlePath]
+#define BPTintColor [UIColor colorWithWhite:74.f / 255.f alpha:1]
+#define BPPrefsFilePath  [NSString stringWithFormat:@"/User/Library/Preferences/%@.plist", BPBundleID]
+#define BPPrefsChangedNotification [NSString stringWithFormat:@"%@/ReloadPrefs", BPBundleID]
+#define IN_BBM ([[NSBundle mainBundle].bundleIdentifier isEqualToString:@"com.blackberry.bbm1"])
 
 
 
@@ -30,6 +26,30 @@ NSDictionary* preferences;
 #pragma mark - Functions
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-BOOL preferenceKeyBool(NSString* key) {
+CHInline NSString* BPLocalizedString(NSString *languageKey) {
+    return [BPBundle localizedStringForKey:languageKey value:nil table:nil];
+}
+
+CHInline UIImage* BPBundleImage(NSString *imageName) {
+    return [UIImage imageNamed:imageName inBundle:BPBundle compatibleWithTraitCollection:nil];
+}
+
+CHInline BOOL preferenceKeyBool(NSString* key) {
 	return [preferences[key] boolValue];
+}
+
+CHInline void BPPreferencesReloaded() {
+	preferences = [NSDictionary dictionaryWithContentsOfFile:BPPrefsFilePath];
+}
+
+CHInline void BPLoadPreferencesAndAddChangesObserver(void) {
+    CFNotificationCenterAddObserver(
+    	CFNotificationCenterGetDarwinNotifyCenter(),
+    	NULL, (CFNotificationCallback) BPPreferencesReloaded,
+    	(CFStringRef) BPPrefsChangedNotification,
+    	NULL,
+    	CFNotificationSuspensionBehaviorCoalesce
+   	);
+
+	BPPreferencesReloaded();
 }
