@@ -1,0 +1,122 @@
+{
+	title = "BBM+";
+	items = (
+		{
+			cell = PSGroupCell;
+			footerCellClass = BBMTapSharpHeaderCell;
+		},
+
+		{
+			cell = PSGroupCell;
+			footerText = GENERAL_FOOTER_TEXT;
+		},
+		{
+			cell = PSSwitchCell;
+			default = 0;
+			defaults = "com.tapsharp.bbmplus";
+			key = "Enabled";
+			label = ENABLED;
+		},
+
+
+		{
+			cell = PSGroupCell;
+			label = INDIVIDUAL_SETTINGS;
+			footerText = INDIVIDUAL_SETTINGS_TEXT;
+		},
+        {
+            cell = PSLinkListCell;
+            defaults = "com.tapsharp.bbmplus";
+            default = 0;
+            detail = HBListItemsController;
+            key = "Hide_Read_Typing_Status";
+            label = "HIDE_READ_AND_TYPING_STATUS";
+            validTitles = ( "ON", "OFF" );
+            validValues = ( 1, 0 );
+            PostNotification = "com.tapsharp.bbmplus/ReloadPrefs";
+        },
+		{
+            cell = PSLinkListCell;
+            defaults = "com.tapsharp.bbmplus";
+            default = 0;
+            detail = HBListItemsController;
+            key = "Unlimited_Pings";
+            label = UNLIMITED_PINGS;
+            validTitles = ( "ON", "OFF" );
+            validValues = ( 1, 0 );
+            PostNotification = "com.tapsharp.bbmplus/ReloadPrefs";
+        },
+		{
+            cell = PSLinkListCell;
+            defaults = "com.tapsharp.bbmplus";
+            default = 0;
+            detail = HBListItemsController;
+            key = "Disable_Ads";
+            label = DISABLE_ADS;
+            validTitles = ( "ON", "OFF" );
+            validValues = ( 1, 0 );
+            PostNotification = "com.tapsharp.bbmplus/ReloadPrefs";
+        },
+		{
+            cell = PSLinkListCell;
+            defaults = "com.tapsharp.bbmplus";
+            default = 0;
+            detail = HBListItemsController;
+            key = "Hide_Screenshot_Reporting";
+            label = HIDE_SCREENSHOT_REPORT;
+            validTitles = ( "ON", "OFF" );
+            validValues = ( 1, 0 );
+            PostNotification = "com.tapsharp.bbmplus/ReloadPrefs";
+        },
+		{
+            cell = PSLinkListCell;
+            defaults = "com.tapsharp.bbmplus";
+            default = 0;
+            detail = HBListItemsController;
+            key = "Disable_Retraction";
+            label = DISABLE_RETRACTION;
+            validTitles = ( "ON", "OFF" );
+            validValues = ( 1, 0 );
+            PostNotification = "com.tapsharp.bbmplus/ReloadPrefs";
+        },
+		{
+            cell = PSLinkListCell;
+            defaults = "com.tapsharp.bbmplus";
+            default = 0;
+            detail = HBListItemsController;
+            key = "Timed_Message_Forever";
+            label = TIMED_MESSAGE_FOREVER;
+            validTitles = ( "ON", "OFF" );
+            validValues = ( 1, 0 );
+            PostNotification = "com.tapsharp.bbmplus/ReloadPrefs";
+        },
+        {
+            cell = PSLinkListCell;
+            defaults = "com.tapsharp.bbmplus";
+            default = 0;
+            enabled = 0;
+            detail = HBListItemsController;
+            key = "Dark_Mode";
+            label = DARK_MODE;
+            validTitles = ( "ON", "OFF" );
+            validValues = ( 1, 0 );
+            PostNotification = "com.tapsharp.bbmplus/ReloadPrefs";
+        },
+
+
+        {
+            cell = PSGroupCell;
+        },
+        {
+            cell = PSLinkCell;
+            detail = BBMAboutListController;
+            isController = 1;
+            label = ABOUT;
+        },
+
+		{
+			cell = PSGroupCell;
+			footerCellClass = BBMTapSharpFooterCell;
+		}
+	);
+}
