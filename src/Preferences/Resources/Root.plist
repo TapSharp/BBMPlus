@@ -12,7 +12,7 @@
 		},
 		{
 			cell = PSSwitchCell;
-			default = 1;
+			default = 0;
 			defaults = "com.tapsharp.bbmplus";
 			key = "Enabled";
 			label = ENABLED;

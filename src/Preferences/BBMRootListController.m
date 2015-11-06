@@ -4,14 +4,6 @@
 
 #pragma mark - Constants
 
--(id)init {
-    self = [super init];
-    if (self) {
-	    preferences = [HBPreferences preferencesForIdentifier:BBMPLUS_BUNDLE_ID];
-    }
-    return self;
-}
-
 + (NSString *)hb_shareText {
 	NSString *formatString = NSLocalizedStringFromTableInBundle(@"SHARE_TEXT", @"Root", [NSBundle bundleForClass:self.class], nil);
 	return [NSString stringWithFormat:formatString, [BBMRootListController hb_shareURL]];
@@ -29,14 +21,26 @@
 	return @"Root";
 }
 
-// - (id)readPreferenceValue:(PSSpecifier *)specifier {
-//     return [preferences objectForKey:[specifier identifier]];
-// }
++ (void)postPreferenceChangedNotification {
+	CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), (CFStringRef)BBMPLUS_PREFS_NOTIFICATION, NULL, NULL, YES);
+}
+
+- (id)readPreferenceValue:(PSSpecifier *)specifier {
+	NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:BBMPLUS_PREFS_FILE];
+
+	if ( ! prefs[[specifier propertyForKey:@"key"]]) {
+		return [specifier propertyForKey:@"default"];
+	}
+
+	return prefs[[specifier propertyForKey:@"key"]];
+}
 
 - (void)setPreferenceValue:(id)value specifier:(PSSpecifier *)specifier {
-	//[super setPreferenceValue:value specifier:specifier];
-    [preferences setObject:value forKey:[specifier propertyForKey:@"key"]];
-    [preferences synchronize];
+	NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+	[defaults addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:BBMPLUS_PREFS_FILE]];
+	[defaults setObject:value forKey:[specifier properties][@"key"]];
+	[defaults writeToFile:BBMPLUS_PREFS_FILE atomically:YES];
+    [BBMRootListController postPreferenceChangedNotification];
 }
 
 
