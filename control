@@ -7,7 +7,7 @@ Description: Tweak the sh*t out of BlackBerry Messenger.
 Maintainer: TapSharp <tweaks@tapsharp.com>
 Author: TapSharp <tweaks@tapsharp.com>
 Support: https://repo.tapsharp.com
-Icon: file:///Library/PreferenceBundles/bbmplus.bundle/icon.png
+Icon: file:///Library/PreferenceBundles/bbmplusprefs.bundle/icon.png
 Section: Tweaks
 Tag: BBM,bbm+,blackberry,messenger,blackberry messenger
 Conflicts: com.ck.bbmplus
