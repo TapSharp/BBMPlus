@@ -9,10 +9,8 @@
 	@autoreleasepool {
 		BPLoadPreferencesAndAddChangesObserver();
 
-		if ( ! IN_BBM || ! preferences[@"Enabled"]) {
-			return;
+		if (BPInBBMApplication && preferences[@"Enabled"]) {
+			%init;
 		}
-
-		%init;
 	}
 }

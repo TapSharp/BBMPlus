@@ -5,9 +5,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>bbmplus</string>
+	<string>bbmplusprefs</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.tapsharp.bbmplus</string>
+	<string>com.tapsharp.bbmplusprefs</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -19,6 +19,6 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>NSPrincipalClass</key>
-	<string>BBMRootListController</string>
+	<string>BPRootListController</string>
 </dict>
 </plist>

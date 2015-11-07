@@ -1,27 +1,31 @@
 [[Localizable]]
   [ABOUT]
     en = About
+  [DARK_MODE]
+    en = Dark Mode (Coming Soon)
+  [DISABLE_ADS]
+    en = Disable Ads
+  [DISABLE_RETRACTION]
+    en = Disable Retraction
   [ENABLED]
-    en = Enabled
-  [EXTENSIONS]
-    en = Extensions
-  [EXTENSIONS_TO_BE_ADDED]
-    en = Extensions will be added with each major version release. Have a suggestion? Contact us using any of the methods below.
-  [GENERAL]
-    en = General
-  [HOOKER_DESCRIPTION]
-    en = It's like springtomize but for Apps!
+  	en = Enabled
+  [GENERAL_FOOTER_TEXT]
+    en = You can quickly toggle on/off BBM+ using this switch. You MAY need to respring to see changes.
+  [HIDE_READ_AND_TYPING_STATUS]
+  	en = Hide Read & Typing Status
+  [HIDE_SCREENSHOT_REPORT]
+    en = Hide Screenshot Reporting
   [INDIVIDUAL_SETTINGS]
-    en = Individual Settings
-  [NO_INSTALLED_EXTENSIONS]
-    en= No installed extensions.
+  	en = Individual Settings
+  [INDIVIDUAL_SETTINGS_TEXT]
+  	en = You can turn off each setting individually here, but the general toggle must be "Enabled" first.
+  [OFF]
+    en = Off
+  [ON]
+    en = On
   [SHARE_TEXT]
-    en = I'm Loving #Hooker, a centralized application tweak for iOS. cc @NeoIghodaro @CreativityKills
-  [TOGGLE_EXTENSION_SWITCH]
-    en = Toggle this switch to globally enable or disable this extension. Use this to quickly disable this extension without affecting the others.
-  [TOGGLE_ON_OFF_NO_RESPRING]
-    en = You can enable or disable each setting individually. You do not need to respring to see the effects.
-  [TOGGLE_ON_OFF_RESPRING]
-    en = You can enable or disable each setting individually. You need to respring to see the effects.
-  [TURNING_OFF_GLOBAL_SWITCH]
-    en = You can quickly enable or disable all the Hooker extensions by toggling this switch.
+    en = Hey, I'm using BBM+ Pro by @TapSharp to change the way I use BBM on my iPhone.
+  [TIMED_MESSAGE_FOREVER]
+    en = Timed Messages Forever
+  [UNLIMITED_PINGS]
+    en = Unlimited Pings

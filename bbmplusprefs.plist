@@ -1,10 +1,10 @@
 {
     entry = {
-		bundle = bbmplus;
+		bundle = bbmplusprefs;
 		label = "BBM+ PRO";
 		icon = icon.png;
 		cell = PSLinkCell;
 		isController = 1;
-		detail = "BBMRootListController";
+		detail = BBMRootListController;
     };
 }
