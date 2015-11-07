@@ -29,6 +29,8 @@
     en = Off
   [ON]
     en = On
+  [PREVIOUSLY_RETRACTED]
+    en = *Previously Retracted*
   [SHARE_TEXT]
     en = Hey, I'm using BBM+ Pro by @TapSharp to change the way I use BBM on my iPhone.
   [TIMED_MESSAGE_FOREVER]
