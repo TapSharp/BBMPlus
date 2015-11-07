@@ -35,7 +35,7 @@
 
 		@{
 			@"cell": @"PSGroupCell",
-			@"label": @"DEVELOPER"
+			@"label": BPLocalizedString(@"DEVELOPER")
 		},
 		@{
 			@"cell": @"PSTitleValueCell",
@@ -44,19 +44,30 @@
 			@"user": @"NeoIghodaro"
 		},
 
+		@{
+			@"cell": @"PSGroupCell",
+			@"label": BPLocalizedString(@"TRANSLATION"),
+			@"footerText": BPLocalizedString(@"TRANSLATION_REQUEST")
+		},
+		@{
+			@"cell": @"PSTitleValueCell",
+			@"cellClass": @"HBTwitterCell",
+			@"label": @"Thiago S.",
+			@"user": @"smicelato"
+		},
+
 
 		@{
 			@"cell": @"PSGroupCell",
-			@"footerText": @"EMAIL_SUPPORT_TEXT"
+			@"footerText": BPLocalizedString(@"EMAIL_SUPPORT_TEXT")
 		},
 		@{
 			@"cell": @"PSTitleValueCell",
 			@"action": @"hb_sendSupportEmail",
 			@"cell": @"PSButtonCell",
 			@"cellClass": @"HBTintedTableCell",
-			@"label": @"EMAIL_SUPPORT"
+			@"label": BPLocalizedString(@"EMAIL_SUPPORT")
 		}
-
 	];
 }
 

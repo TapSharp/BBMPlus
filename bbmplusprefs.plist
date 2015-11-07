@@ -1,8 +1,8 @@
 {
     entry = {
 		bundle = bbmplusprefs;
-		label = "BBM+ PRO";
-		icon = icon.png;
+		label = "BBM+ Pro";
+		icon = "icon.png";
 		cell = PSLinkCell;
 		isController = 1;
 		detail = BBMRootListController;

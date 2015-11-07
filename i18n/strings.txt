@@ -3,10 +3,16 @@
     en = About
   [DARK_MODE]
     en = Dark Mode (Coming Soon)
+  [DEVELOPER]
+    en = Developer
   [DISABLE_ADS]
     en = Disable Ads
   [DISABLE_RETRACTION]
     en = Disable Retraction
+  [EMAIL_SUPPORT]
+    en = Email Support
+  [EMAIL_SUPPORT_TEXT]
+    en = Need support, send us an email and we will get back to you, however, you can just tweet at us to get instant help.
   [ENABLED]
   	en = Enabled
   [GENERAL_FOOTER_TEXT]
@@ -27,5 +33,9 @@
     en = Hey, I'm using BBM+ Pro by @TapSharp to change the way I use BBM on my iPhone.
   [TIMED_MESSAGE_FOREVER]
     en = Timed Messages Forever
+  [TRANSLATION]
+    en = Translation
+  [TRANSLATION_REQUEST]
+    en = Would you like to help with translation? Use the email support button below.
   [UNLIMITED_PINGS]
     en = Unlimited Pings
