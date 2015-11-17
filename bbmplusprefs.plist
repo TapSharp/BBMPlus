@@ -1,7 +1,7 @@
 {
     entry = {
 		bundle = bbmplusprefs;
-		label = "BBM+ Pro";
+		label = "BBM+";
 		icon = "icon.png";
 		cell = PSLinkCell;
 		isController = 1;

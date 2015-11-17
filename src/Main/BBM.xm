@@ -3,6 +3,141 @@
 NSMutableDictionary* preferences;
 
 
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#pragma mark - Research
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%group BBM_RESEARCH
+
+%hook BBMConversationViewController
+- (BOOL)canHaveCall {
+	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
+}
+- (void)checkIfTimeLimitSupported {
+	%log; %orig;
+}
+- (id)entitlementsMonitor {
+	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
+}
+- (BOOL)isTimeLimitAvailableForCurrentContent {
+	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
+}
+- (void)sendScreenshotTakenMessage:(BOOL)arg1 {
+	%log; %orig;
+}
+%end
+
+
+%hook BBMCoreAccess
+
+-(id)getLocations {
+	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
+}
+-(void)setLocationReportingInCore:(BOOL)arg1 {
+	%log; %orig;
+}
+-(void)reportLocation:(id)arg1 {
+	%log; %orig;
+}
+-(void)addLocationWithInfo:(id)arg1 {
+	%log; %orig;
+}
+
+%end
+
+
+%hook BBMGenUser
+
+-(void)setShowLocationTimezone:(NSNumber *)arg1 {
+	%log; %orig;
+}
+
+-(void)setTimezone:(NSString *)arg1 {
+	%log; %orig;
+}
+
+-(id)getLocation {
+	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
+}
+
+%end
+
+
+%hook PPRiskDeviceData
+- (id)currentLocation {
+	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
+}
++(BOOL)isJailBroken {
+	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
+}
+
+%end
+
+
+%hook BBMLocalSettings
+
++(BOOL)reportLocation {
+	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
+}
+
++(id)locationCountryCode {
+	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
+}
+
++(void)setLocationCountryCode:(id)arg1 {
+	%log; %orig;
+}
+
++(void)setNextLocationUpdateTimestamp:(id)arg1 {
+	%log; %orig;
+}
+
++(id)locationLatitude {
+	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
+}
+
++(id)locationLongitude {
+	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
+}
+
++(id)appVersion {
+	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
+}
+
++(BOOL)privateMessagesEnabled {
+	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
+}
+
++(BOOL)allowCellularCalls {
+	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
+}
+
+%end
+
+
+%hook BBMUser
+
+-(BOOL)isMessageRecallSupported {
+	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
+}
+
+-(BOOL)isPrivateChatSupported {
+	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
+}
+
+-(BOOL)isEphemeralMessagingSupported {
+	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
+}
+
+-(BOOL)isCurrentUser {
+	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
+}
+
+%end
+
+%end
+
+
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #pragma mark - General
@@ -63,7 +198,8 @@ NSMutableDictionary* preferences;
 %group BBM_SCREENSHOT_REPORTING
 
 %hook BBMCoreAccess
-- (void)markEphemeralMessageAsScreenshotted:(id)convoId { %orig(NULL); }
+- (void)markEphemeralMessageAsScreenshotted:(id)convoId { }
+- (void)sendScreenshotDetectedMessageForConversationUri:(id)arg1 message:(id)arg2 { }
 %end
 
 %hook BBMGenEphemeralMetaData
@@ -99,6 +235,7 @@ NSMutableDictionary* preferences;
 %hook BBMCoreAccess
 - (id)getAllAds { return NULL; }
 - (id)adsEnabled { return NULL; }
+-(id)getSponsoredInvites { return NULL; }
 %end
 
 %hook BBMADSAd
@@ -173,10 +310,10 @@ NSMutableDictionary* preferences;
 	@autoreleasepool {
 		if (BBMApplicationIsBeingLoaded) {
 			BPLoadPreferencesAndAddObserver();
-			HBLogDebug(@"%@", preferences);
 
 			if (BBMApplicationIsBeingLoaded && preferences[BPKeyForEnabled]) {
 				%init(BBM_GENERAL);
+				//%init(BBM_RESEARCH);
 
 				if (preferences[BPKeyForDarkMode]) %init(BBM_DARK_MODE);
 				if (preferences[BPKeyForDisableAds]) %init(BBM_DISABLE_ADS);
