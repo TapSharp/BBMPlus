@@ -1,7 +1,8 @@
 {
 	Filter = {
 		Bundles = (
-			"com.blackberry.bbm1"
+			"com.blackberry.bbm1",
+			"com.apple.corelocation"
 		);
 	};
 }

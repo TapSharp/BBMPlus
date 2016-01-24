@@ -1,8 +1,15 @@
 #import "BBM.h"
+#import <CoreLocation/CoreLocation.h>
 
 NSMutableDictionary* preferences;
 
 #define BBMPLUS_RESEARCH YES
+
+// Europe/London, GMT +1
+// America/New_York, GMT -5
+#define SPOOFED_TIMEZONE @"America/New_York"
+#define SPOOFED_LATITUDE  38.89876
+#define SPOOFED_LONGITUDE -77.036679
 
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,7 +46,8 @@ NSMutableDictionary* preferences;
 	%log; %orig;
 }
 -(void)reportLocation:(id)arg1 {
-	%log; %orig;
+	return;
+	%log; %orig(NULL);
 }
 -(void)addLocationWithInfo:(id)arg1 {
 	%log; %orig;
@@ -55,11 +63,12 @@ NSMutableDictionary* preferences;
 }
 
 -(void)setTimezone:(NSString *)arg1 {
-	%log; %orig;
+	%log;
+	%orig(SPOOFED_TIMEZONE);
 }
 
 -(id)getLocation {
-	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
+	%log; id res = %orig; HBLogDebug(@"%@", res); return @"US"; // return res;
 }
 
 %end
@@ -69,18 +78,11 @@ NSMutableDictionary* preferences;
 - (id)currentLocation {
 	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
 }
-+(BOOL)isJailBroken {
-	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
-}
 
 %end
 
 
 %hook BBMLocalSettings
-
-+(BOOL)reportLocation {
-	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
-}
 
 +(id)locationCountryCode {
 	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
@@ -90,28 +92,8 @@ NSMutableDictionary* preferences;
 	%log; %orig;
 }
 
-+(void)setNextLocationUpdateTimestamp:(id)arg1 {
-	%log; %orig;
-}
-
-+(id)locationLatitude {
-	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
-}
-
-+(id)locationLongitude {
-	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
-}
-
 +(id)appVersion {
 	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
-}
-
-+(BOOL)privateMessagesEnabled {
-	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
-}
-
-+(BOOL)allowCellularCalls {
-	%log; BOOL res = %orig; HBLogDebug(@"%@", res ? @YES : @NO) return res;
 }
 
 %end
@@ -141,6 +123,9 @@ NSMutableDictionary* preferences;
 
 
 
+
+
+
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #pragma mark - General
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -151,8 +136,61 @@ NSMutableDictionary* preferences;
 - (bool)isJailbroken { return NO; }
 %end
 
+%hook PPRiskDeviceData
++(BOOL)isJailBroken { return NO; }
 %end
 
+%end
+
+
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#pragma mark - Spoof Location
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%group BBM_SPOOF_LOCATION
+
+void spoof_updateLocations(id cls, SEL selector, CLLocationManager *locationManager, NSArray *locations) {
+	HBLogDebug(@"spoof_updateLocations");
+    static CLLocationCoordinate2D spoofedCoords;
+
+    spoofedCoords.latitude = SPOOFED_LATITUDE;
+    spoofedCoords.longitude = SPOOFED_LONGITUDE;
+
+    CLLocation *realLocation = [locations lastObject];
+
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	NSTimeZone *tz = [NSTimeZone timeZoneWithName:SPOOFED_TIMEZONE];
+	[dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
+	[dateFormatter setTimeZone:tz];
+
+	NSString *oldDate = [[dateFormatter stringFromDate:[realLocation timestamp]] copy];
+	NSDate *newTimestamp = [dateFormatter dateFromString:oldDate];
+
+    CLLocation *spoofedLocation = [[CLLocation alloc]   initWithCoordinate:spoofedCoords
+                                                        altitude:0.00
+                                                        horizontalAccuracy:[realLocation horizontalAccuracy]
+                                                        verticalAccuracy:[realLocation verticalAccuracy]
+                                                        course:[realLocation course]
+                                                        speed:[realLocation speed]
+                                                        timestamp:newTimestamp];
+
+    if([cls respondsToSelector:@selector(locationManager:oldDidUpdateLocations:)]) {
+        [cls performSelector:@selector(locationManager:oldDidUpdateLocations:) withObject:locationManager withObject:@[spoofedLocation]];
+    }
+
+    [dateFormatter release];
+}
+
+%hook CLLocationManager
+-(void)setDelegate:(id)delegate {
+    IMP old_updateLocationsMethod = class_replaceMethod(object_getClass(delegate), @selector(locationManager:didUpdateLocations:), (IMP)spoof_updateLocations, "@:@@");
+    class_addMethod(object_getClass(delegate), @selector(locationManager:oldDidUpdateLocations:), old_updateLocationsMethod, "@:@@");
+    %orig;
+}
+%end
+
+%end
 
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -334,6 +372,9 @@ void BPLoadPreferencesAndAddObserver(void) {
 				if (BBMPLUS_RESEARCH == YES) {
 					%init(BBM_RESEARCH);
 				}
+
+
+				%init(BBM_SPOOF_LOCATION);
 
 				if ([preferences[BPKeyForDarkMode] boolValue]) {
 					%init(BBM_DARK_MODE);

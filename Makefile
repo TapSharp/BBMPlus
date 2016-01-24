@@ -3,6 +3,7 @@ BUNDLE_NAME = bbmplusprefs
 
 bbmplus_FILES  = $(wildcard src/Main/*.xm)
 bbmplus_LIBRARIES = cephei
+bbmplus_PRIVATE_FRAMEWORKS = CoreLocation
 
 bbmplusprefs_FILES = $(wildcard src/Preferences/*.m)
 bbmplusprefs_INSTALL_PATH = /Library/PreferenceBundles
