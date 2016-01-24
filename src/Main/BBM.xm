@@ -2,6 +2,8 @@
 
 NSMutableDictionary* preferences;
 
+#define BBMPLUS_RESEARCH YES
+
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #pragma mark - Research
@@ -306,22 +308,60 @@ NSMutableDictionary* preferences;
 #pragma mark - Constructor
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+void BPLoadPreferences(void) {
+	HBLogDebug(@"Load preferences");
+    preferences = [NSMutableDictionary dictionaryWithContentsOfFile:BPPrefsFilePath];
+}
+
+void BPLoadPreferencesAndAddObserver(void) {
+    CFNotificationCenterAddObserver(
+        CFNotificationCenterGetDarwinNotifyCenter(), NULL,
+        (CFNotificationCallback) BPLoadPreferences,
+        (CFStringRef) BPPrefsChangedNotification, NULL,
+        CFNotificationSuspensionBehaviorCoalesce);
+
+    BPLoadPreferences();
+}
+
 %ctor {
 	@autoreleasepool {
 		if (BBMApplicationIsBeingLoaded) {
 			BPLoadPreferencesAndAddObserver();
 
-			if (BBMApplicationIsBeingLoaded && preferences[BPKeyForEnabled]) {
+			if (BBMApplicationIsBeingLoaded && [preferences[BPKeyForEnabled] boolValue]) {
 				%init(BBM_GENERAL);
-				//%init(BBM_RESEARCH);
 
-				if (preferences[BPKeyForDarkMode]) %init(BBM_DARK_MODE);
-				if (preferences[BPKeyForDisableAds]) %init(BBM_DISABLE_ADS);
-				if (preferences[BPKeyForNoRetraction]) %init(BBM_NO_RETRACTION);
-				if (preferences[BPKeyForUnlimitedPings]) %init(BBM_UNLIMITED_PINGS);
-				if (preferences[BPKeyForTimedMessagesForever]) %init(BBM_TIMED_MSGS_FOREVER);
-				if (preferences[BPKeyForScreenshotReporting]) %init(BBM_SCREENSHOT_REPORTING);
-				if (preferences[BPKeyForHideReadAndTypingKey]) %init(BBM_HIDE_READ_AND_TYPING);
+				if (BBMPLUS_RESEARCH == YES) {
+					%init(BBM_RESEARCH);
+				}
+
+				if ([preferences[BPKeyForDarkMode] boolValue]) {
+					%init(BBM_DARK_MODE);
+				}
+
+				if ([preferences[BPKeyForDisableAds] boolValue]) {
+					%init(BBM_DISABLE_ADS);
+				}
+
+				if ([preferences[BPKeyForNoRetraction] boolValue]) {
+					%init(BBM_NO_RETRACTION);
+				}
+
+				if ([preferences[BPKeyForUnlimitedPings] boolValue]) {
+					%init(BBM_UNLIMITED_PINGS);
+				}
+
+				if ([preferences[BPKeyForTimedMessagesForever] boolValue]) {
+					%init(BBM_TIMED_MSGS_FOREVER);
+				}
+
+				if ([preferences[BPKeyForScreenshotReporting] boolValue]) {
+					%init(BBM_SCREENSHOT_REPORTING);
+				}
+
+				if ([preferences[BPKeyForHideReadAndTypingKey] boolValue]) {
+					%init(BBM_HIDE_READ_AND_TYPING);
+				}
 			}
 		}
 

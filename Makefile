@@ -6,20 +6,22 @@ bbmplus_LIBRARIES = cephei
 
 bbmplusprefs_FILES = $(wildcard src/Preferences/*.m)
 bbmplusprefs_INSTALL_PATH = /Library/PreferenceBundles
-bbmplusprefs_FRAMEWORKS = UIKit
+bbmplusprefs_FRAMEWORKS = UIKit QuartzCore CoreGraphics
 bbmplusprefs_PRIVATE_FRAMEWORKS = Preferences
 bbmplusprefs_LIBRARIES = cephei cepheiprefs
 bbmplusprefs_RESOURCE_DIRS = resources
 
 export ARCHS = armv7 arm64
-export TARGET = iphone:clang
+export TARGET = iphone:clang:latest:latest
+export THEOS_DEVICE_IP=iphone
+export THEOS_DEVICE_PORT=22
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/tweak.mk
 include $(THEOS_MAKE_PATH)/bundle.mk
 
 after-install::
-	install.exec "killall -9 BBM"
+	install.exec "killall -9 SpringBoard"
 
 internal-stage::
 	$(ECHO_NOTHING)mkdir -p $(THEOS_STAGING_DIR)/Library/PreferenceLoader/Preferences$(ECHO_END)

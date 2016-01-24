@@ -11,4 +11,3 @@ BBM+ allows you tweak BBM in ways never before possible.
 * Hide Screenshot Notification –– Your friends wont know when you've screenshotted a timed photo
 * Hide Typing Notification –– Stop typing notifications from being sent to your friends
 * Timeless Timed Messages –– Remove time limits from all timed messages and photos
-* Disable recent updates –– Stop yourself from seeing recent updates from your friends

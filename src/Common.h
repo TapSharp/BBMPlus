@@ -5,7 +5,7 @@
 #pragma mark - Definitions
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-#define BPBundleID @"com.tapsharp.bbmplus"
+#define BPBundleID @"com.ck.bbmplus"
 #define BPBundlePath @"/Library/PreferenceBundles/bbmplusprefs.bundle"
 
 #define BPTintColor [UIColor colorWithWhite:(74.f/255.f) alpha:1.0f]
@@ -29,7 +29,7 @@
 #pragma mark - Variables
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-extern NSMutableDictionary* preferences;
+//NSMutableDictionary* preferences;
 
 
 
@@ -37,28 +37,14 @@ extern NSMutableDictionary* preferences;
 #pragma mark - Functions
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-CHInline NSBundle* BPBundle(void) {
+static NSBundle* BPBundle(void) {
     return [NSBundle bundleWithPath:BPBundlePath];
 }
 
-CHInline NSString* BPLocalizedString(NSString *languageKey) {
+static NSString* BPLocalizedString(NSString *languageKey) {
     return [BPBundle() localizedStringForKey:languageKey value:nil table:nil];
 }
 
-CHInline UIImage* BPBundleImage(NSString *imageName) {
-    return [UIImage imageNamed:imageName inBundle:BPBundle() compatibleWithTraitCollection:nil];
-}
-
-CHInline void BPLoadPreferences(void) {
-    preferences = [NSMutableDictionary dictionaryWithContentsOfFile:BPPrefsFilePath];
-}
-
-CHInline void BPLoadPreferencesAndAddObserver(void) {
-    CFNotificationCenterAddObserver(
-        CFNotificationCenterGetDarwinNotifyCenter(), NULL,
-        (CFNotificationCallback) BPLoadPreferences,
-        (CFStringRef) BPPrefsChangedNotification, NULL,
-        CFNotificationSuspensionBehaviorCoalesce);
-
-    BPLoadPreferences();
-}
+// static UIImage* BPBundleImage(NSString *imageName) {
+//     return [UIImage imageNamed:imageName inBundle:BPBundle() compatibleWithTraitCollection:nil];
+// }
