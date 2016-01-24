@@ -7,6 +7,7 @@ NSMutableDictionary* preferences;
 
 // Europe/London, GMT +1
 // America/New_York, GMT -5
+#define SPOOFED_COUNTRYCODE @"US"
 #define SPOOFED_TIMEZONE @"America/New_York"
 #define SPOOFED_LATITUDE  38.89876
 #define SPOOFED_LONGITUDE -77.036679
@@ -45,10 +46,6 @@ NSMutableDictionary* preferences;
 -(void)setLocationReportingInCore:(BOOL)arg1 {
 	%log; %orig;
 }
--(void)reportLocation:(id)arg1 {
-	return;
-	%log; %orig(NULL);
-}
 -(void)addLocationWithInfo:(id)arg1 {
 	%log; %orig;
 }
@@ -60,15 +57,6 @@ NSMutableDictionary* preferences;
 
 -(void)setShowLocationTimezone:(NSNumber *)arg1 {
 	%log; %orig;
-}
-
--(void)setTimezone:(NSString *)arg1 {
-	%log;
-	%orig(SPOOFED_TIMEZONE);
-}
-
--(id)getLocation {
-	%log; id res = %orig; HBLogDebug(@"%@", res); return @"US"; // return res;
 }
 
 %end
@@ -83,14 +71,6 @@ NSMutableDictionary* preferences;
 
 
 %hook BBMLocalSettings
-
-+(id)locationCountryCode {
-	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
-}
-
-+(void)setLocationCountryCode:(id)arg1 {
-	%log; %orig;
-}
 
 +(id)appVersion {
 	%log; id res = %orig; HBLogDebug(@"%@", res); return res;
@@ -150,8 +130,8 @@ NSMutableDictionary* preferences;
 
 %group BBM_SPOOF_LOCATION
 
-void spoof_updateLocations(id cls, SEL selector, CLLocationManager *locationManager, NSArray *locations) {
-	HBLogDebug(@"spoof_updateLocations");
+static void BBMSpoofLocation(id cls, SEL selector, CLLocationManager *locationManager, NSArray *locations) {
+	HBLogDebug(@"BBMSpoofLocation called");
     static CLLocationCoordinate2D spoofedCoords;
 
     spoofedCoords.latitude = SPOOFED_LATITUDE;
@@ -183,11 +163,25 @@ void spoof_updateLocations(id cls, SEL selector, CLLocationManager *locationMana
 }
 
 %hook CLLocationManager
--(void)setDelegate:(id)delegate {
-    IMP old_updateLocationsMethod = class_replaceMethod(object_getClass(delegate), @selector(locationManager:didUpdateLocations:), (IMP)spoof_updateLocations, "@:@@");
+- (void)setDelegate:(id)delegate {
+    IMP old_updateLocationsMethod = class_replaceMethod(object_getClass(delegate), @selector(locationManager:didUpdateLocations:), (IMP)BBMSpoofLocation, "@:@@");
     class_addMethod(object_getClass(delegate), @selector(locationManager:oldDidUpdateLocations:), old_updateLocationsMethod, "@:@@");
     %orig;
 }
+%end
+
+%hook BBMGenUser
+- (void)setTimezone:(NSString *)arg1 { %orig(SPOOFED_TIMEZONE); }
+- (id)getLocation { return SPOOFED_COUNTRYCODE; }
+%end
+
+%hook BBMCoreAccess
+- (void)reportLocation:(id)arg1 { /* @TODO: Research what Object arg1 is */ }
+%end
+
+%hook BBMLocalSettings
++ (id)locationCountryCode { return SPOOFED_COUNTRYCODE; }
++ (void)setLocationCountryCode:(id)arg1 { %orig(SPOOFED_COUNTRYCODE); }
 %end
 
 %end
